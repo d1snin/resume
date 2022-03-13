@@ -19,10 +19,20 @@ class HtmlResumeRenderer : ResumeRenderer {
         return createHTML().html {
             head {
                 meta("viewport", "width=device-width, initial-scale=1.0, user-scalable=no")
-                styleLink("./resume.css")
+                styleLink("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css")
             }
 
-            body {
+            body("d-flex justify-content-center bg-dark text-white") {
+                style {
+                    unsafe {
+                        +"""
+                        * {
+                          font-size: 1.1vw; 
+                        }
+                        """
+                    }
+                }
+
                 pre {
                     +plainText
                 }
