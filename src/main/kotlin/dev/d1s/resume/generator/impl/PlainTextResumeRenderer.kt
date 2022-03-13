@@ -144,8 +144,6 @@ class PlainTextResumeRenderer : ResumeRenderer {
             cellStyle {
                 alignment = TextAlignment.MiddleCenter
                 border = true
-                paddingTop = 1
-                paddingBottom = 1
                 paddingLeft = 2
                 paddingRight = 2
             }
