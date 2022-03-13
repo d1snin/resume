@@ -5,6 +5,7 @@ import dev.d1s.resume.generator.ResumeRenderer
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.proerties.ResumeConfigurationProperties
 import dev.d1s.resume.proerties.model.Knowledge
+import dev.d1s.teabag.logging.logger
 import dev.d1s.teabag.stdlib.text.padding
 import dev.d1s.teabag.web.appendPath
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,12 +17,17 @@ class PlainTextResumeRenderer : ResumeRenderer {
     @Autowired
     private lateinit var resume: ResumeConfigurationProperties
 
-    override fun render(page: Page): String = when (page) {
-        Page.MAIN -> this.renderMain()
-        Page.ABOUT_ME -> this.renderAboutMe()
-        Page.CONTACTS -> this.renderContacts()
-        Page.KNOWLEDGE -> this.renderKnowledge()
-        Page.PROJECTS -> this.renderProjects()
+    private val log = logger
+
+    override fun render(page: Page): String {
+        log.debug("Rendering ${page.path}")
+        return when (page) {
+            Page.MAIN -> this.renderMain()
+            Page.ABOUT_ME -> this.renderAboutMe()
+            Page.CONTACTS -> this.renderContacts()
+            Page.KNOWLEDGE -> this.renderKnowledge()
+            Page.PROJECTS -> this.renderProjects()
+        }
     }
 
     private fun renderMain() = tableWithDefaultHeader {}
