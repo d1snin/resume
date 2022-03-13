@@ -1,0 +1,147 @@
+spring:
+  application:
+    name: resume
+
+resume:
+  banner: |
+    ██████╗  ██╗███████╗███╗   ██╗██╗███╗   ██╗
+    ██╔══██╗███║██╔════╝████╗  ██║██║████╗  ██║
+    ██║  ██║╚██║███████╗██╔██╗ ██║██║██╔██╗ ██║
+    ██║  ██║ ██║╚════██║██║╚██╗██║██║██║╚██╗██║
+    ██████╔╝ ██║███████║██║ ╚████║██║██║ ╚████║
+    ╚═════╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝
+
+  name: "Mikhail Titov"
+  nickname: "d1snin"
+  shortBio: "Java/Kotlin software engineer and enthusiast. Mostly interested in backend."
+  longBio: |
+    Hi, I am a developer in Kotlin and Java languages.
+    I mainly develop projects under open-source licenses.
+    In most cases, I use the Spring Framework paired with Kotlin.
+    I am always interested in any projects related to backend,
+    application architecture and database design.
+    You can always contact me using the contacts below (the answer in the Telegram will be the fastest).
+
+  location: "Russia (UTC + 3)"
+  age: 16
+  languages:
+    - name: "Java"
+      knowledge: |
+        I have a good experience in Java development,
+        using its standard library and creating
+        applications from discord bots to
+        sustainable enterprise applications.
+
+    - name: "Kotlin"
+      knowledge: |
+        Kotlin is my main development language which I really like.
+        My practice shows that it speeds up the process of developing
+        all kinds of applications several times.
+        I use it in all my current projects.
+
+  frameworks:
+    - name: "Spring Framework"
+      knowledge: |
+        I mainly use the Spring Framework to create web applications
+        with a standard stack (this application built with Spring and Kotlin).
+        I also like to make starters for Spring Boot applications that make
+        development easier and faster.
+
+  contacts:
+    - service: "Telegram"
+      address: "https://t.me/d1snin"
+
+    - service: "GitHub"
+      address: "https://github.com/d1snin"
+
+  projects:
+    - name: "pulseq"
+      description: |
+        Self-hosted RESTful tracking
+        engine for activity periods.
+      status: "development"
+      url: "https://github.com/pulseq-project/pulseq"
+
+    - name: "linda"
+      description: |
+        Redirecting service
+        with UTM support.
+      status: "development"
+      url: "https://github.com/linda-project/linda"
+
+    - name: "yaspeller-kt"
+      description: |
+        Asynchronous Yandex.Speller API
+        wrapper for Kotlin/JVM.
+      status: "maintenance"
+      url: "https://github.com/d1snin/yaspeller-kt"
+
+    - name: "initializr-kt"
+      description: |
+        Asynchronous Spring Initializr
+        (https://start.spring.io/)
+        wrapper for Kotlin/JVM.
+      status: "maintenance"
+      url: "https://github.com/d1snin/initializr-kt"
+
+    - name: "teabags"
+      description: |
+        Common utilities
+        for Spring modules and
+        other libraries.
+      status: "development"
+      url: "https://github.com/d1snin/teabags"
+
+    - name: "resume"
+      description: "This resume."
+      status: "maintenance"
+      url: "https://github.com/d1snin/resume"
+
+    - name: "spring-boot-starter-slash"
+      description: |
+        Spring Boot Starter
+        for Discord Slash Commands
+        with MVC pattern support.
+      status: "maintenance"
+      url: "https://github.com/d1snin/spring-boot-starter-slash"
+
+    - name: "spring-boot-starter-caching"
+      description: |
+        Spring Cache extensions with
+        default Caffeine backend.
+        Built for my projects.
+      status: "maintenance"
+      url: "https://github.com/d1snin/spring-boot-starter-caching"
+
+    - name: "spring-boot-starter-advice"
+      description: |
+        Spring boot starter that provides
+        convenient exception handling,
+        mostly for my projects.
+      status: "maintenance"
+      url: "https://github.com/d1snin/spring-boot-starter-advice"
+
+    - name: "spring-boot-starter-simple-security"
+      description: |
+        Security starter
+        providing simple
+        secret-based authentication.
+      status: "maintenance"
+      url: "https://github.com/d1snin/spring-boot-starter-simple-security"
+
+    - name: "initializr-over-discord"
+      description: |
+        Spring Initializr
+        (https://start.spring.io/)
+        interface over Discord.
+        Initialize your new Spring Boot
+        project right in the app.
+      status: "maintenance"
+      url: "https://github.com/d1snin/initializr-over-discord"
+
+    - name: "yaspeller-over-discord"
+      description: |
+        Discord bot interface
+        for Yandex.Speller API.
+      status: "maintenance"
+      url: "https://github.com/d1snin/yaspeller-over-discord"
