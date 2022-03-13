@@ -110,8 +110,6 @@ class PlainTextResumeRenderer : ResumeRenderer {
 
         return tableWithDefaultHeader(span) {
             cellStyle {
-                paddingTop = 0
-                paddingBottom = 0
                 paddingLeft = 1
                 paddingRight = 1
             }
