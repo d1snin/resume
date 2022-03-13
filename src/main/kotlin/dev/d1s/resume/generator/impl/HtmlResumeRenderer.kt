@@ -29,16 +29,11 @@ class HtmlResumeRenderer : ResumeRenderer {
                         * {
                           font-size: 1.1vw; 
                         }
-                        
-                        pre {
-                          display: inline;
-                          margin: 0;
-                        }
                         """
                     }
                 }
 
-                pre {
+                pre("mt-3") {
                     +plainText
                 }
             }

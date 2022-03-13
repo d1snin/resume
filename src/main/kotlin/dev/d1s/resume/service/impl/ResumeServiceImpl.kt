@@ -5,6 +5,7 @@ import dev.d1s.resume.page.Kind
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.service.ResumeService
 import dev.d1s.teabag.logging.logger
+import dev.d1s.teabag.stdlib.text.padding
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -37,7 +38,12 @@ class ResumeServiceImpl : ResumeService {
     private fun initializeResumePages() {
         setOf(Page.MAIN, Page.ABOUT_ME, Page.CONTACTS, Page.KNOWLEDGE, Page.PROJECTS).forEach {
             htmlPages = htmlPages + (it to htmlResumeRenderer.render(it))
-            plainTextPages = plainTextPages + (it to plainTextResumeRenderer.render(it))
+            plainTextPages = plainTextPages + (it to plainTextResumeRenderer.render(it).padding {
+                top = 5
+                bottom = 5
+                left = 10
+                right = 10
+            })
         }
     }
 }
