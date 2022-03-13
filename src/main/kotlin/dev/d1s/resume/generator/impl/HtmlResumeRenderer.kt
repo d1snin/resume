@@ -29,6 +29,11 @@ class HtmlResumeRenderer : ResumeRenderer {
                         * {
                           font-size: 1.1vw; 
                         }
+                        
+                        pre {
+                          display: inline;
+                          margin: 0;
+                        }
                         """
                     }
                 }
