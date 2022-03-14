@@ -26,14 +26,16 @@ class HtmlResumeRenderer : ResumeRenderer {
                 style {
                     unsafe {
                         +"""
-                        * {
-                          font-size: 1.1vw; 
+                        @media only screen and (max-width: 1450px) {
+                          * {
+                            font-size: 1vw;
+                          }
                         }
                         """
                     }
                 }
 
-                pre("mt-3") {
+                pre {
                     +plainText
                 }
             }

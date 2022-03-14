@@ -6,6 +6,7 @@ import dev.d1s.resume.page.Page
 import dev.d1s.resume.proerties.ResumeConfigurationProperties
 import dev.d1s.resume.proerties.model.Knowledge
 import dev.d1s.teabag.logging.logger
+import dev.d1s.teabag.stdlib.text.padding
 import dev.d1s.teabag.web.appendPath
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -178,7 +179,12 @@ class PlainTextResumeRenderer : ResumeRenderer {
             }
 
             block()
-        }.renderText()
+        }.renderText().padding {
+            top = 5
+            bottom = 5
+            left = 10
+            right = 10
+        }
 
     private fun TableDsl.fullRowCellWithColumnSpan(span: Int, content: String) {
         row {
