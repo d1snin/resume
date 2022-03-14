@@ -1,10 +1,10 @@
 package dev.d1s.resume.renderer.impl
 
 import com.jakewharton.picnic.*
-import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.proerties.ResumeConfigurationProperties
 import dev.d1s.resume.proerties.model.Knowledge
+import dev.d1s.resume.renderer.PlainTextResumeRenderer
 import dev.d1s.teabag.logging.logger
 import dev.d1s.teabag.stdlib.text.padding
 import dev.d1s.teabag.web.appendPath
@@ -12,21 +12,32 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class PlainTextResumeRenderer : ResumeRenderer {
+class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
 
     @Autowired
     private lateinit var resume: ResumeConfigurationProperties
 
     private val log = logger
 
-    override fun render(page: Page): String {
+    override fun render(page: Page, padding: Boolean): String {
         log.debug("Rendering ${page.path}")
-        return when (page) {
+        val table = when (page) {
             Page.MAIN -> this.renderMain()
             Page.ABOUT_ME -> this.renderAboutMe()
             Page.CONTACTS -> this.renderContacts()
             Page.KNOWLEDGE -> this.renderKnowledge()
             Page.PROJECTS -> this.renderProjects()
+        }
+
+        return if (padding) {
+            table.padding {
+                top = 5
+                bottom = 5
+                left = 10
+                right = 10
+            }
+        } else {
+            table
         }
     }
 
@@ -179,12 +190,7 @@ class PlainTextResumeRenderer : ResumeRenderer {
             }
 
             block()
-        }.renderText().padding {
-            top = 5
-            bottom = 5
-            left = 10
-            right = 10
-        }
+        }.renderText()
 
     private fun TableDsl.fullRowCellWithColumnSpan(span: Int, content: String) {
         row {

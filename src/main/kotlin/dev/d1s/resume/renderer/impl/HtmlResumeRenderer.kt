@@ -1,8 +1,9 @@
 package dev.d1s.resume.renderer.impl
 
-import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.proerties.ResumeConfigurationProperties
+import dev.d1s.resume.renderer.PlainTextResumeRenderer
+import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.teabag.web.currentUriWithNoPath
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
@@ -13,18 +14,18 @@ import org.springframework.stereotype.Component
 class HtmlResumeRenderer : ResumeRenderer {
 
     @Autowired
-    private lateinit var plainTextResumeRenderer: ResumeRenderer
+    private lateinit var plainTextResumeRenderer: PlainTextResumeRenderer
 
     @Autowired
     private lateinit var resume: ResumeConfigurationProperties
 
     override fun render(page: Page): String {
-        val plainText = plainTextResumeRenderer.render(page)
+        val plainText = plainTextResumeRenderer.render(page, false)
 
         return createHTML().html {
             head {
                 meta(charset = Charsets.UTF_8.name())
-                meta("viewport", "width=device-width, initial-scale=1.0, user-scalable=no")
+                meta("viewport", "width=device-width, initial-scale=1.0")
 
                 resume.name?.let {
                     title(it)
@@ -53,11 +54,11 @@ class HtmlResumeRenderer : ResumeRenderer {
                 styleLink("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css")
             }
 
-            body("d-flex justify-content-center bg-dark text-white") {
+            body("d-flex justify-content-center bg-dark text-white mt-5") {
                 style {
                     unsafe {
                         +"""
-                         * {
+                         pre {
                            font-size: 1vw;
                            }
                         }

@@ -1,8 +1,9 @@
 package dev.d1s.resume.service.impl
 
-import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.page.Kind
 import dev.d1s.resume.page.Page
+import dev.d1s.resume.renderer.PlainTextResumeRenderer
+import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.service.ResumeService
 import dev.d1s.teabag.logging.logger
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +16,7 @@ class ResumeServiceImpl : ResumeService {
     private lateinit var htmlResumeRenderer: ResumeRenderer
 
     @Autowired
-    private lateinit var plainTextResumeRenderer: ResumeRenderer
+    private lateinit var plainTextResumeRenderer: PlainTextResumeRenderer
 
     private var htmlPages: Map<Page, String> = mutableMapOf()
     private var plainTextPages: Map<Page, String> = mutableMapOf()
