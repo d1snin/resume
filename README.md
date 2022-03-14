@@ -1,4 +1,4 @@
 # resume
 My terminal-friendly resume.
 
-![image](https://user-images.githubusercontent.com/68169685/158239801-61a65f92-a80d-40de-9dd9-44bc9e779bc8.png)
+![Peek 2022-03-14 22-47](https://user-images.githubusercontent.com/68169685/158249644-37b1c544-85f9-428d-ab17-ff4a93212340.gif)
