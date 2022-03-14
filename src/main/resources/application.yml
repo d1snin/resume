@@ -3,6 +3,7 @@ spring:
     name: resume
 
 resume:
+  preferHttps: true
   banner: |
     ██████╗  ██╗███████╗███╗   ██╗██╗███╗   ██╗
     ██╔══██╗███║██╔════╝████╗  ██║██║████╗  ██║

@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated
 
 @ConfigurationProperties("resume")
 data class ResumeConfigurationProperties(
+    var preferHttps: Boolean = true,
     var banner: String? = null,
     var name: String? = null,
     var nickname: String? = null,
