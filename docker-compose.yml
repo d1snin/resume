@@ -5,4 +5,4 @@ services:
     image: resume:1.0.3-stable.1
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "8080:8080"
