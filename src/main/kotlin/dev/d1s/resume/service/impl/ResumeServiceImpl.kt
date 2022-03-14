@@ -1,6 +1,6 @@
 package dev.d1s.resume.service.impl
 
-import dev.d1s.resume.generator.ResumeRenderer
+import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.page.Kind
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.service.ResumeService

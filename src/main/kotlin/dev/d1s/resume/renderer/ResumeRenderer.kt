@@ -1,4 +1,4 @@
-package dev.d1s.resume.generator
+package dev.d1s.resume.renderer
 
 import dev.d1s.resume.page.Page
 

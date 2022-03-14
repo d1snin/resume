@@ -1,7 +1,7 @@
-package dev.d1s.resume.generator.impl
+package dev.d1s.resume.renderer.impl
 
 import com.jakewharton.picnic.*
-import dev.d1s.resume.generator.ResumeRenderer
+import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.proerties.ResumeConfigurationProperties
 import dev.d1s.resume.proerties.model.Knowledge
