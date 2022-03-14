@@ -182,7 +182,7 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
                     }
 
                     cell(Page.values().joinToString(separator = "\n") {
-                        "* ${it.prettyName}: curl ${appendPath(it.path, resume.preferHttps)}"
+                        "* ${it.prettyName}: curl -L ${appendPath(it.path, false)}"
                     }) {
                         columnSpan = columnSpanValue
                     }

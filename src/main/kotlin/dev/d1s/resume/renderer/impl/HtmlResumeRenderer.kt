@@ -43,7 +43,7 @@ class HtmlResumeRenderer : ResumeRenderer {
                 meta("type".og(), "website")
                 meta("card".twitter(), "summary_large_image")
 
-                val url = currentUriWithNoPath(resume.preferHttps)
+                val url = currentUriWithNoPath(replaceHttpWithHttps = resume.preferHttps)
                 meta("url".og(), url)
                 meta("url".twitter(), url)
 
