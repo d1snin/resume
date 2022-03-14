@@ -59,9 +59,9 @@ class HtmlResumeRenderer : ResumeRenderer {
                         +"""
                          * {
                            font-size: 1vw;
-                           }
-                        }
-                        """
+                           font-family: monospace, monospace !important;
+                         }
+                         """
                     }
                 }
 
