@@ -26,10 +26,9 @@ class HtmlResumeRenderer : ResumeRenderer {
                 style {
                     unsafe {
                         +"""
-                        @media only screen and (max-width: 1450px) {
-                          * {
-                            font-size: 1vw;
-                          }
+                         * {
+                           font-size: 1vw;
+                           }
                         }
                         """
                     }
