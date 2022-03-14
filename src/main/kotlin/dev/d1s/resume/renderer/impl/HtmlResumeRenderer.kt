@@ -60,9 +60,9 @@ class HtmlResumeRenderer : ResumeRenderer {
                         +"""
                          pre {
                            font-size: 1vw;
-                           }
-                        }
-                        """
+                           font-family: monospace, monospace !important;
+                         }
+                         """
                     }
                 }
 
