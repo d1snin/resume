@@ -2,8 +2,8 @@ package dev.d1s.resume.renderer.impl
 
 import com.jakewharton.picnic.*
 import dev.d1s.resume.page.Page
-import dev.d1s.resume.proerties.ResumeConfigurationProperties
-import dev.d1s.resume.proerties.model.Knowledge
+import dev.d1s.resume.properties.ResumeConfigurationProperties
+import dev.d1s.resume.properties.model.Knowledge
 import dev.d1s.resume.renderer.PlainTextResumeRenderer
 import dev.d1s.teabag.logging.logger
 import dev.d1s.teabag.stdlib.text.padding

@@ -1,7 +1,7 @@
 package dev.d1s.resume.renderer.impl
 
 import dev.d1s.resume.page.Page
-import dev.d1s.resume.proerties.ResumeConfigurationProperties
+import dev.d1s.resume.properties.ResumeConfigurationProperties
 import dev.d1s.resume.renderer.PlainTextResumeRenderer
 import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.teabag.web.currentUriWithNoPath

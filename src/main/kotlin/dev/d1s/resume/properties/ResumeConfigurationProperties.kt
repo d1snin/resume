@@ -1,8 +1,8 @@
-package dev.d1s.resume.proerties
+package dev.d1s.resume.properties
 
-import dev.d1s.resume.proerties.model.Contact
-import dev.d1s.resume.proerties.model.Knowledge
-import dev.d1s.resume.proerties.model.Project
+import dev.d1s.resume.properties.model.Contact
+import dev.d1s.resume.properties.model.Knowledge
+import dev.d1s.resume.properties.model.Project
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.validation.annotation.Validated
 

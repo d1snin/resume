@@ -1,4 +1,4 @@
-package dev.d1s.resume.proerties.model
+package dev.d1s.resume.properties.model
 
 import javax.validation.constraints.NotBlank
 

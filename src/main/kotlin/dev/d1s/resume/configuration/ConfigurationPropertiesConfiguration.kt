@@ -1,6 +1,6 @@
 package dev.d1s.resume.configuration
 
-import dev.d1s.resume.proerties.ResumeConfigurationProperties
+import dev.d1s.resume.properties.ResumeConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
