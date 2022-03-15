@@ -75,8 +75,8 @@ class HtmlResumeRenderer : ResumeRenderer {
                     }
                 }
 
-                unsafe {
-                    +"<pre>\n$plainText\n</pre>"
+                pre {
+                    +plainText
                 }
             }
         }
