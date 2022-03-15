@@ -68,19 +68,15 @@ class HtmlResumeRenderer : ResumeRenderer {
                     unsafe {
                         +"""
                          pre {
-                           font-size: 1.3em;
+                           font-size: 1.3em;k
                            font-family: monospace, monospace !important;
                          }
-                         """
+                         """.trimIndent()
                     }
                 }
 
                 unsafe {
-                    +"""
-                     <pre>
-                        $plainText
-                     </pre
-                     """
+                    +"<pre>\n$plainText\n</pre>"
                 }
             }
         }
