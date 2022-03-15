@@ -4,6 +4,7 @@ import dev.d1s.resume.page.Page
 import dev.d1s.resume.properties.ResumeConfigurationProperties
 import dev.d1s.resume.renderer.PlainTextResumeRenderer
 import dev.d1s.resume.renderer.ResumeRenderer
+import dev.d1s.teabag.web.buildFromCurrentRequest
 import dev.d1s.teabag.web.currentUriWithNoPath
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
@@ -47,7 +48,15 @@ class HtmlResumeRenderer : ResumeRenderer {
                 meta("url".og(), url)
                 meta("url".twitter(), url)
 
-                val image = "./pfp.jpg"
+                val image = buildFromCurrentRequest {
+                    if (resume.preferHttps) {
+                        scheme("https")
+                    }
+
+                    replacePath(null)
+                    path("pfp.jpg")
+                }
+
                 meta("image".twitter(), image)
                 meta("image".og(), image)
 
@@ -66,8 +75,12 @@ class HtmlResumeRenderer : ResumeRenderer {
                     }
                 }
 
-                pre {
-                    +plainText
+                unsafe {
+                    +"""
+                     <pre>
+                        $plainText
+                     </pre
+                     """
                 }
             }
         }
