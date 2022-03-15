@@ -69,13 +69,16 @@ class HtmlResumeRenderer : ResumeRenderer {
                         +"""
                          pre {
                            font-size: 1.3em;
+                           margin: 20px;
                          }
                          """.trimIndent()
                     }
                 }
 
-                pre {
-                    +plainText
+                div("container-fluid") {
+                    pre {
+                        +plainText
+                    }
                 }
             }
         }
