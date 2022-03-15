@@ -59,7 +59,7 @@ class HtmlResumeRenderer : ResumeRenderer {
                     unsafe {
                         +"""
                          pre {
-                           font-size: 1vw;
+                           font-size: 1.3em;
                            font-family: monospace, monospace !important;
                          }
                          """
