@@ -1,12 +1,13 @@
 package dev.d1s.resume.service.impl
 
+import dev.d1s.resume.constant.RESUME_CACHE
 import dev.d1s.resume.page.Kind
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.renderer.PlainTextResumeRenderer
 import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.service.ResumeService
-import dev.d1s.teabag.logging.logger
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,27 +19,9 @@ class ResumeServiceImpl : ResumeService {
     @Autowired
     private lateinit var plainTextResumeRenderer: PlainTextResumeRenderer
 
-    private var htmlPages: Map<Page, String> = mutableMapOf()
-    private var plainTextPages: Map<Page, String> = mutableMapOf()
-
-    private val log = logger
-
-    override fun get(page: Page, kind: Kind): String {
-        if (htmlPages.isEmpty() && plainTextPages.isEmpty()) {
-            this.initializeResumePages()
-            log.debug("Initialized pages.")
-        }
-
-        return when (kind) {
-            Kind.HTML -> htmlPages[page]!!
-            Kind.PLAIN_TEXT -> plainTextPages[page]!!
-        }
-    }
-
-    private fun initializeResumePages() {
-        setOf(Page.MAIN, Page.ABOUT_ME, Page.CONTACTS, Page.KNOWLEDGE, Page.PROJECTS).forEach {
-            htmlPages = htmlPages + (it to htmlResumeRenderer.render(it))
-            plainTextPages = plainTextPages + (it to plainTextResumeRenderer.render(it))
-        }
+    @Cacheable(RESUME_CACHE)
+    override fun get(page: Page, kind: Kind): String = when (kind) {
+        Kind.HTML -> htmlResumeRenderer.render(page)
+        Kind.PLAIN_TEXT -> plainTextResumeRenderer.render(page)
     }
 }
