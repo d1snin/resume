@@ -29,7 +29,7 @@ class HtmlResumeRenderer : ResumeRenderer {
         return createHTML().html {
             head {
                 meta(charset = Charsets.UTF_8.name())
-                meta("viewport", "width=device - width, initial - scale = 1.0")
+                meta("viewport", "width=device-width, initial-scale=1.0")
 
                 config.name?.let {
                     title(it)
