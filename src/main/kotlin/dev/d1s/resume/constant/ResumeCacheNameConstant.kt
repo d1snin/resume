@@ -1,3 +1,3 @@
 package dev.d1s.resume.constant
 
-const val RESUME_CACHE = "resume"
+const val PLAIN_TEXT_RESUME_CACHE = "plain-text-resume"

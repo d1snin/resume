@@ -2,6 +2,10 @@ spring:
   application:
     name: resume
 
+  main:
+    allow-circular-references: true
+
+
 resume:
   preferHttps: true
   banner: |

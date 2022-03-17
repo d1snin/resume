@@ -1,43 +1,31 @@
 package dev.d1s.resume.renderer.impl
 
 import com.jakewharton.picnic.*
+import dev.d1s.resume.constant.PLAIN_TEXT_RESUME_CACHE
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.properties.ResumeConfigurationProperties
 import dev.d1s.resume.properties.model.Knowledge
-import dev.d1s.resume.renderer.PlainTextResumeRenderer
-import dev.d1s.teabag.logging.logger
+import dev.d1s.resume.renderer.ResumeRenderer
+import dev.d1s.resume.util.link
 import dev.d1s.teabag.stdlib.text.padding
-import dev.d1s.teabag.web.appendPath
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 
 @Component
-class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
+class PlainTextResumeRenderer : ResumeRenderer {
 
     @Autowired
-    private lateinit var resume: ResumeConfigurationProperties
+    private lateinit var config: ResumeConfigurationProperties
 
-    private val log = logger
-
-    override fun render(page: Page, padding: Boolean): String {
-        log.debug("Rendering ${page.path}")
-        val table = when (page) {
+    @Cacheable(PLAIN_TEXT_RESUME_CACHE)
+    override fun render(page: Page): String {
+        return when (page) {
             Page.MAIN -> this.renderMain()
             Page.ABOUT_ME -> this.renderAboutMe()
             Page.CONTACTS -> this.renderContacts()
             Page.KNOWLEDGE -> this.renderKnowledge()
             Page.PROJECTS -> this.renderProjects()
-        }
-
-        return if (padding) {
-            table.padding {
-                top = 5
-                bottom = 5
-                left = 10
-                right = 10
-            }
-        } else {
-            table
         }
     }
 
@@ -48,15 +36,15 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
 
         return tableWithDefaultHeader(span) {
             val summaryInfoMap = mapOf(
-                "Name" to resume.name,
-                "Nickname" to resume.nickname,
-                "Age" to resume.age,
-                "Location" to resume.location
+                "Name" to config.name,
+                "Nickname" to config.nickname,
+                "Age" to config.age,
+                "Location" to config.location
             )
 
             val emptySummary = summaryInfoMap.values.filterNotNull().isEmpty()
 
-            val longBio = resume.longBio
+            val longBio = config.longBio
 
             longBio?.let {
                 row {
@@ -83,7 +71,7 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
         val span = 2
 
         return tableWithDefaultHeader(span) {
-            val contacts = resume.contacts
+            val contacts = config.contacts
 
             if (contacts.isNotEmpty()) {
                 row("Service", "Address")
@@ -104,8 +92,8 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
         val span = 3
 
         return tableWithDefaultHeader(span) {
-            val languages = resume.languages
-            val frameworks = resume.frameworks
+            val languages = config.languages
+            val frameworks = config.frameworks
 
             this.buildKnowledge(languages, "Languages")
             this.buildKnowledge(frameworks, "Frameworks")
@@ -125,7 +113,7 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
                 paddingRight = 1
             }
 
-            val projects = resume.projects
+            val projects = config.projects
 
             if (projects.isNotEmpty()) {
                 row("Name", "Description", "Status", "URL")
@@ -160,7 +148,7 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
             }
 
             header {
-                resume.banner?.let {
+                config.banner?.let {
                     row {
                         cell(it) {
                             columnSpan = columnSpanValue
@@ -168,7 +156,7 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
                     }
                 }
 
-                resume.shortBio?.let {
+                config.shortBio?.let {
                     row {
                         cell(it) {
                             columnSpan = columnSpanValue
@@ -182,7 +170,7 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
                     }
 
                     cell(Page.values().joinToString(separator = "\n") {
-                        "* ${it.prettyName}: curl ${appendPath(it.path, replaceHttpWithHttps = resume.preferHttps)}"
+                        "* ${it.prettyName}: curl ${it.link(config.preferHttps)}"
                     }) {
                         columnSpan = columnSpanValue
                     }
@@ -190,7 +178,12 @@ class PlainTextResumeRendererImpl : PlainTextResumeRenderer {
             }
 
             block()
-        }.renderText()
+        }.renderText().padding {
+            top = 5
+            bottom = 5
+            left = 10
+            right = 10
+        }
 
     private fun TableDsl.fullRowCellWithColumnSpan(span: Int, content: String) {
         row {

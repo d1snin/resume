@@ -9,9 +9,7 @@ import java.io.PrintStream
 class ResumeBanner : Banner {
 
     override fun printBanner(environment: Environment, sourceClass: Class<*>, out: PrintStream) {
-        val banner = environment["resume.banner"]
-
-        banner?.let {
+        environment["resume.banner"]?.let {
             out.println(
                 it.padding {
                     left = 5
