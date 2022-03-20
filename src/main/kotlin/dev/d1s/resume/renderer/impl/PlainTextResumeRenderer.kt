@@ -3,6 +3,7 @@ package dev.d1s.resume.renderer.impl
 import com.jakewharton.picnic.*
 import dev.d1s.resume.constant.PLAIN_TEXT_RESUME_CACHE
 import dev.d1s.resume.page.Page
+import dev.d1s.resume.page.PageRendering
 import dev.d1s.resume.properties.ResumeConfigurationProperties
 import dev.d1s.resume.properties.model.Knowledge
 import dev.d1s.resume.renderer.ResumeRenderer
@@ -19,22 +20,22 @@ class PlainTextResumeRenderer : ResumeRenderer {
     private lateinit var config: ResumeConfigurationProperties
 
     @Cacheable(PLAIN_TEXT_RESUME_CACHE)
-    override fun render(page: Page): String {
-        return when (page) {
-            Page.MAIN -> this.renderMain()
-            Page.ABOUT_ME -> this.renderAboutMe()
-            Page.CONTACTS -> this.renderContacts()
-            Page.KNOWLEDGE -> this.renderKnowledge()
-            Page.PROJECTS -> this.renderProjects()
+    override fun render(pageRendering: PageRendering): String {
+        return when (pageRendering.page) {
+            Page.MAIN -> this.renderMain(pageRendering)
+            Page.ABOUT_ME -> this.renderAboutMe(pageRendering)
+            Page.CONTACTS -> this.renderContacts(pageRendering)
+            Page.KNOWLEDGE -> this.renderKnowledge(pageRendering)
+            Page.PROJECTS -> this.renderProjects(pageRendering)
         }
     }
 
-    private fun renderMain() = tableWithDefaultHeader {}
+    private fun renderMain(pageRendering: PageRendering) = tableWithDefaultHeader(pageRendering)
 
-    private fun renderAboutMe(): String {
+    private fun renderAboutMe(pageRendering: PageRendering): String {
         val span = 2
 
-        return tableWithDefaultHeader(span) {
+        return tableWithDefaultHeader(pageRendering, span) {
             val summaryInfoMap = mapOf(
                 "Name" to config.name,
                 "Nickname" to config.nickname,
@@ -67,10 +68,10 @@ class PlainTextResumeRenderer : ResumeRenderer {
         }
     }
 
-    private fun renderContacts(): String {
+    private fun renderContacts(pageRendering: PageRendering): String {
         val span = 2
 
-        return tableWithDefaultHeader(span) {
+        return tableWithDefaultHeader(pageRendering, span) {
             val contacts = config.contacts
 
             if (contacts.isNotEmpty()) {
@@ -88,10 +89,10 @@ class PlainTextResumeRenderer : ResumeRenderer {
         }
     }
 
-    private fun renderKnowledge(): String {
+    private fun renderKnowledge(pageRendering: PageRendering): String {
         val span = 3
 
-        return tableWithDefaultHeader(span) {
+        return tableWithDefaultHeader(pageRendering, span) {
             val languages = config.languages
             val frameworks = config.frameworks
 
@@ -104,10 +105,10 @@ class PlainTextResumeRenderer : ResumeRenderer {
         }
     }
 
-    private fun renderProjects(): String {
+    private fun renderProjects(pageRendering: PageRendering): String {
         val span = 4
 
-        return tableWithDefaultHeader(span) {
+        return tableWithDefaultHeader(pageRendering, span) {
             cellStyle {
                 paddingLeft = 1
                 paddingRight = 1
@@ -130,8 +131,9 @@ class PlainTextResumeRenderer : ResumeRenderer {
     }
 
     private inline fun tableWithDefaultHeader(
+        pageRendering: PageRendering,
         columnSpanValue: Int = 1,
-        crossinline block: TableDsl.() -> Unit
+        crossinline block: TableDsl.() -> Unit = {}
     ): String =
         table {
             style {
@@ -158,7 +160,12 @@ class PlainTextResumeRenderer : ResumeRenderer {
 
                 config.shortBio?.let {
                     row {
-                        cell(it) {
+                        cell(
+                            "${
+                                pageRendering.echo?.let {
+                                    "$it\n\n"
+                                } ?: ""
+                            }$it") {
                             columnSpan = columnSpanValue
                         }
                     }

@@ -1,6 +1,7 @@
 package dev.d1s.resume.renderer.impl
 
 import dev.d1s.resume.page.Page
+import dev.d1s.resume.page.PageRendering
 import dev.d1s.resume.properties.ResumeConfigurationProperties
 import dev.d1s.resume.properties.model.Knowledge
 import dev.d1s.resume.renderer.ResumeRenderer
@@ -23,7 +24,9 @@ class HtmlResumeRenderer : ResumeRenderer {
     @Autowired
     private lateinit var resumeService: ResumeService
 
-    override fun render(page: Page): String {
+    override fun render(pageRendering: PageRendering): String {
+        val page = pageRendering.page
+
         val pfpSource = appendRootPath("profile-picture.jpg", replaceHttpWithHttps = config.preferHttps)
 
         return createHTML().html {
@@ -107,6 +110,12 @@ class HtmlResumeRenderer : ResumeRenderer {
                     div("container-fluid") {
                         div("container-sm justify-content-center mx-auto text-center text-white fst-italic m-5") {
                             img("Profile picture", pfpSource, "rounded-circle pfp")
+
+                            pageRendering.echo?.let {
+                                p("m-5") {
+                                    +it
+                                }
+                            }
 
                             config.shortBio?.let {
                                 p("m-5") {
