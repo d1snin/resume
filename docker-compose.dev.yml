@@ -2,7 +2,7 @@ version: "3"
 
 services:
   resume:
-    image: resume:1.2.0-stable.0
+    image: resume:1.2.1-stable.1
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: "dev"
