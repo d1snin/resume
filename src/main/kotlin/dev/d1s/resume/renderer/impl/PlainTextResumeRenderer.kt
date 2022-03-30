@@ -9,6 +9,7 @@ import dev.d1s.resume.properties.model.Knowledge
 import dev.d1s.resume.renderer.ResumeRenderer
 import dev.d1s.resume.util.link
 import dev.d1s.teabag.stdlib.text.padding
+import dev.d1s.teabag.stdlib.text.wrapLines
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
@@ -16,144 +17,139 @@ import org.springframework.stereotype.Component
 @Component
 class PlainTextResumeRenderer : ResumeRenderer {
 
+    private companion object {
+        private const val MAX_LINE_WIDTH = 70
+    }
+
     @Autowired
     private lateinit var config: ResumeConfigurationProperties
 
     @Cacheable(PLAIN_TEXT_RESUME_CACHE)
     override fun render(pageRendering: PageRendering): String {
-        return when (pageRendering.page) {
-            Page.MAIN -> this.renderMain(pageRendering)
-            Page.ABOUT_ME -> this.renderAboutMe(pageRendering)
-            Page.CONTACTS -> this.renderContacts(pageRendering)
-            Page.KNOWLEDGE -> this.renderKnowledge(pageRendering)
-            Page.PROJECTS -> this.renderProjects(pageRendering)
+        return this.renderTableWithDefaultHeader(pageRendering) {
+            when (pageRendering.page) {
+                Page.MAIN -> {} // nothing to render
+                Page.ABOUT_ME -> this.renderAboutMe()
+                Page.CONTACTS -> this.renderContacts()
+                Page.KNOWLEDGE -> this.renderKnowledge()
+                Page.PROJECTS -> this.renderProjects()
+            }
         }
     }
 
-    private fun renderMain(pageRendering: PageRendering) = tableWithDefaultHeader(pageRendering)
+    private fun TableDsl.renderAboutMe() {
+        val summaryInfoMap = mapOf(
+            "Name" to config.name!!.toString(),
+            "Nickname" to config.nickname!!,
+            "Age" to config.age!!.toString(),
+            "Location" to config.location!!
+        )
 
-    private fun renderAboutMe(pageRendering: PageRendering): String {
-        val span = 2
+        val emptySummary = summaryInfoMap.values.isEmpty()
 
-        return tableWithDefaultHeader(pageRendering, span) {
-            val summaryInfoMap = mapOf(
-                "Name" to config.name,
-                "Nickname" to config.nickname,
-                "Age" to config.age,
-                "Location" to config.location
+        val longBio = config.longBio
+
+        longBio?.let {
+            row {
+                cellWithWrappedLines(
+                    asteriskList(Page.ABOUT_ME.prettyName)
+                            + "\n"
+                            + it
+                )
+            }
+        }
+
+        if (!emptySummary) {
+            rowWithWrappedLines(
+                asteriskList(
+                    *summaryInfoMap.map {
+                        it.key to it.value
+                    }.toTypedArray()
+                )
             )
+        }
 
-            val emptySummary = summaryInfoMap.values.filterNotNull().isEmpty()
-
-            val longBio = config.longBio
-
-            longBio?.let {
-                row {
-                    cell(Page.ABOUT_ME.prettyName)
-                    cell(it) {
-                        alignment = TextAlignment.MiddleLeft
-                    }
-                }
-            }
-
-            if (!emptySummary) {
-                summaryInfoMap.forEach {
-                    row(it.key, it.value)
-                }
-            }
-
-            if (emptySummary && longBio == null) {
-                this.fullRowCellWithColumnSpan(span, "No information provided.")
-            }
+        if (emptySummary && longBio == null) {
+            row(
+                asteriskList("No information provided.")
+            )
         }
     }
 
-    private fun renderContacts(pageRendering: PageRendering): String {
-        val span = 2
+    private fun TableDsl.renderContacts() {
+        val contacts = config.contacts
 
-        return tableWithDefaultHeader(pageRendering, span) {
-            val contacts = config.contacts
-
-            if (contacts.isNotEmpty()) {
-                row("Service", "Address")
-            }
-
-            if (contacts.isEmpty()) {
-                this.fullRowCellWithColumnSpan(span, "No contacts provided.")
-                return@tableWithDefaultHeader
-            }
-
+        if (contacts.isNotEmpty()) {
             contacts.forEach {
-                row(it.service, it.address)
+                rowWithWrappedLines(
+                    asteriskList(
+                        "Service" to it.service,
+                        "Address" to it.address
+                    )
+                )
             }
+        } else {
+            row(
+                asteriskList("No contacts provided.")
+            )
         }
     }
 
-    private fun renderKnowledge(pageRendering: PageRendering): String {
-        val span = 3
+    private fun TableDsl.renderKnowledge() {
+        val languages = config.languages
+        val frameworks = config.frameworks
 
-        return tableWithDefaultHeader(pageRendering, span) {
-            val languages = config.languages
-            val frameworks = config.frameworks
+        this.buildKnowledge("Languages", languages)
+        this.buildKnowledge("Frameworks", frameworks)
 
-            this.buildKnowledge(languages, "Languages")
-            this.buildKnowledge(frameworks, "Frameworks")
-
-            if (languages.isEmpty() && frameworks.isEmpty()) {
-                this.fullRowCellWithColumnSpan(span, "No knowledge provided.")
-            }
+        if (languages.isEmpty() && frameworks.isEmpty()) {
+            row(
+                asteriskList("No knowledge provided.")
+            )
         }
     }
 
-    private fun renderProjects(pageRendering: PageRendering): String {
-        val span = 4
+    private fun TableDsl.renderProjects() {
+        val projects = config.projects
 
-        return tableWithDefaultHeader(pageRendering, span) {
-            cellStyle {
-                paddingLeft = 1
-                paddingRight = 1
-            }
-
-            val projects = config.projects
-
-            if (projects.isNotEmpty()) {
-                row("Name", "Description", "Status", "URL")
-            }
-
+        if (projects.isNotEmpty()) {
             projects.forEach {
-                row(it.name, it.description, it.status, it.url)
+                rowWithWrappedLines(
+                    asteriskList(
+                        "Name" to it.name,
+                        "Description" to it.description,
+                        "Status" to it.status,
+                        "URL" to it.url
+                    )
+                )
             }
-
-            if (projects.isEmpty()) {
-                this.fullRowCellWithColumnSpan(span, "No projects provided.")
-            }
+        } else {
+            row(
+                asteriskList("No projects provided.")
+            )
         }
     }
 
-    private inline fun tableWithDefaultHeader(
+    private inline fun renderTableWithDefaultHeader(
         pageRendering: PageRendering,
-        columnSpanValue: Int = 1,
         crossinline block: TableDsl.() -> Unit = {}
     ): String =
         table {
             style {
-                borderStyle = BorderStyle.Solid
+                borderStyle = BorderStyle.Hidden
             }
 
             cellStyle {
-                alignment = TextAlignment.MiddleCenter
+                alignment = TextAlignment.MiddleLeft
+                padding = 1
                 border = true
-                paddingTop = 1
-                paddingBottom = 1
-                paddingLeft = 2
-                paddingRight = 2
             }
 
             header {
                 config.banner?.let {
                     row {
-                        cell(it) {
-                            columnSpan = columnSpanValue
+                        cell(it) { // wrapping is not being applied for the banner
+                            alignment = TextAlignment.MiddleCenter
                         }
                     }
                 }
@@ -162,62 +158,57 @@ class PlainTextResumeRenderer : ResumeRenderer {
                     row {
                         cell(
                             "${
-                                pageRendering.echo?.let {
-                                    "$it\n\n"
+                                pageRendering.echo?.let { echo ->
+                                    "$echo\n\n"
                                 } ?: ""
-                            }$it") {
-                            columnSpan = columnSpanValue
+                            }$it".wrapLines()) {
+                            alignment = TextAlignment.MiddleCenter
                         }
                     }
                 }
 
-                row {
-                    cellStyle {
-                        alignment = TextAlignment.MiddleLeft
-                    }
-
-                    cell(Page.values().joinToString(separator = "\n") {
-                        "* ${it.prettyName}: curl ${it.link(config.preferHttps)}"
-                    }) {
-                        columnSpan = columnSpanValue
-                    }
-                }
+                this@table.rowWithWrappedLines(
+                    asteriskList(
+                        *Page.values().map {
+                            it.prettyName to "curl ${it.link(config.preferHttps)}"
+                        }.toTypedArray()
+                    )
+                )
             }
 
             block()
-        }.renderText().padding {
-            top = 5
-            bottom = 5
-            left = 10
-            right = 10
-        }
+        }.renderText().padding(1)
 
-    private fun TableDsl.fullRowCellWithColumnSpan(span: Int, content: String) {
-        row {
-            cell(content) {
-                columnSpan = span
-            }
+    private fun asteriskList(vararg values: String) = values.joinToString("\n") {
+        "* $it"
+    }
+
+    private fun asteriskList(vararg pairs: Pair<String, String?>): String = this.asteriskList(
+        *pairs.map {
+            "${it.first}: ${it.second}"
+        }.toTypedArray()
+    )
+
+    private fun TableDsl.buildKnowledge(name: String, knowledge: List<Knowledge>) {
+        if (knowledge.isNotEmpty()) {
+            rowWithWrappedLines(
+                asteriskList(
+                    "$name:",
+                    *knowledge.map {
+                        "${it.name}: ${it.knowledge}"
+                    }.toTypedArray()
+                )
+            )
         }
     }
 
-    private fun TableDsl.buildKnowledge(knowledge: List<Knowledge>, cellName: String) {
-        if (knowledge.isNotEmpty()) {
-            row {
-                cell(cellName) {
-                    rowSpan = knowledge.size
-                }
+    private fun String.wrapLines() = this.wrapLines(MAX_LINE_WIDTH)
 
-                val firstFramework = knowledge.first()
+    private fun RowDsl.cellWithWrappedLines(value: String) {
+        cell(value.wrapLines())
+    }
 
-                cell(firstFramework.name)
-                cell(firstFramework.knowledge)
-            }
-
-            for (i in knowledge.indices) {
-                if (i != 0) {
-                    row(knowledge[i].name, knowledge[i].knowledge)
-                }
-            }
-        }
+    private fun TableDsl.rowWithWrappedLines(value: String) {
+        row(value.wrapLines())
     }
 }
