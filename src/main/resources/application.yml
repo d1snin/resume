@@ -1,3 +1,6 @@
+server:
+  port: 9494
+
 spring:
   application:
     name: resume
