@@ -69,8 +69,8 @@ class HtmlResumeRenderer : ResumeRenderer {
             }
 
             body("justify-content-center") {
-                div("bg-dark") {
-                    nav("navbar navbar-expand-lg navbar-dark") {
+                div("bg-black") {
+                    nav("navbar navbar-expand-lg navbar-black") {
                         div("container-fluid") {
                             button(classes = "navbar-toggler", type = ButtonType.button) {
                                 attributes["data-bs-toggle"] = "collapse"
@@ -129,7 +129,7 @@ class HtmlResumeRenderer : ResumeRenderer {
                         }
                     }
 
-                    div("container-fluid bg-dark stub")
+                    div("container-fluid bg-black stub")
                 }
 
                 div("container-fluid stub")
@@ -147,7 +147,7 @@ class HtmlResumeRenderer : ResumeRenderer {
                 style {
                     unsafe {
                         +"* { font-family: monospace, monospace; }"
-                        +"body { background-color: #45474b; }"
+                        +"body { background-color: #212121; }"
                         +".active { color: #e9e9e9; }"
                         +".pfp { width: 13em; height: auto; }"
                         +".stub { height: 2em; }"
@@ -307,7 +307,7 @@ class HtmlResumeRenderer : ResumeRenderer {
         ) {
             items.forEach {
                 div(
-                    "card col-4 text-white bg-dark m-3"
+                    "card col-4 text-white bg-black m-3"
                 ) {
                     div("card-header") {
                         +header(it)
