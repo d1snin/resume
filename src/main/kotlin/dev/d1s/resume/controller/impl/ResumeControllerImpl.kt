@@ -48,6 +48,12 @@ class ResumeControllerImpl : ResumeController {
         response: HttpServletResponse
     ): ResponseEntity<String>? = this.getPage(Page.PROJECTS, accept, echo, response)
 
+    override fun getResume(
+        accept: String?,
+        echo: String?,
+        response: HttpServletResponse
+    ): ResponseEntity<String>? = this.getPage(Page.RESUME, accept, echo, response)
+
     private fun getPage(
         page: Page,
         accept: String?,

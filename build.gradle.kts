@@ -32,6 +32,7 @@ dependencies {
     implementation("dev.d1s.teabags:teabag-stdlib:$teabagsVersion")
     implementation("dev.d1s.teabags:teabag-spring-web:$teabagsVersion")
     implementation("com.jakewharton.picnic:picnic:$picnicVersion")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

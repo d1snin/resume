@@ -54,6 +54,65 @@ resume:
         I also like to make starters for Spring Boot applications that make
         development easier and faster.
 
+    - name: "Ktor"
+      knowledge: |
+        I often use the Ktor framework to build both server and client applications.
+        I consider Ktor to be the framework with which development proceeds quite quickly.
+
+    - name: "Junit"
+      knowledge: |
+        I use Junit almost always when it comes to testing.
+        Most often, I combine it with Spring Boot Test and mockk.
+
+    - name: "Mockk"
+      knowledge: |
+        Mockk is my favorite tool for mocking dependencies, 
+        allowing you to use convenient features of the Kotlin syntax.
+
+  databases:
+    - name: "PostgreSQL"
+      knowledge: |
+        I have worked with Postgresql for a long time and I know how to configure a database, 
+        use it in Docker containers and so on. Had experience working with Postgresql dialect and native types.
+
+    - name: "MariaDB"
+      knowledge: |
+        After using PostgreSQL for a long time, I switched to MariaDB for my small projects. 
+        I appreciate this DB for its built-in query caching.
+
+    - name: "MongoDB"
+      knowledge: |
+        With MongoDB, I fell in love with NoSQL databases. 
+        Mainly for the ability to change the entity schema incredibly quickly, 
+        the simplest data management and the tools provided.
+
+  editors:
+    - name: "Intellij IDEA platform"
+      knowledge: |
+        Intellij IDEA is my favorite code editor that I use daily, more precisely Intellij IDEA Ultimate.
+
+  operating-systems:
+    - name: "Linux"
+      knowledge: |
+        I have extensive experience in the administration of Linux OS systems. 
+        For the last 2 years I have been using Linux as the main operating system. 
+        I have had experience with Ubuntu (server), Debian, Arch Linux.
+
+  ci:
+    - name: "GitHub Actions"
+      knowledge: |
+        For CI, I mainly use GitHub Actions. 
+        I like this platform for its convenient infrastructure offering a variety of tools.
+
+    - name: "Docker"
+      knowledge: |
+        I use the Docker every day to deploy my projects, rapidly develop and other needs.
+
+    - name: "Docker Compose"
+      knowledge: |
+        Docker Compose is my favorite tool for development and deployment, 
+        it helps me to quickly configure and deploy applications.
+
   contacts:
     - service: "Telegram"
       address: "https://t.me/d1snin"
@@ -61,20 +120,41 @@ resume:
     - service: "GitHub"
       address: "https://github.com/d1snin"
 
+    - service: "E-Mail"
+      address: "me@d1s.dev"
+
   projects:
     - name: "pulseq"
       description: |
         Self-hosted RESTful tracking
         engine for activity periods.
       status: "development"
-      url: "https://github.com/pulseq-project/pulseq"
+      url: "https://github.com/d1s-utils/pulseq"
 
     - name: "linda"
       description: |
         Redirecting service
         with UTM support.
       status: "development"
-      url: "https://github.com/linda-project/linda"
+      url: "https://github.com/d1s-utils/linda"
+
+    - name: "hole"
+      description: |
+        Simple and extensible storage service implementation with optional encryption.
+      status: "development"
+      url: "https://github.com/d1s-utils/hole"
+
+    - name: "hole-kt"
+      description: |
+        Hole API wrapper for Kotlin/JVM.
+      status: "development"
+      url: "https://github.com/d1s-utils/hole-kt"
+
+    - name: "long-polling"
+      description: |
+        A complex of libraries and starters for organizing long-polling-based interaction between the client and the server.
+      status: "development"
+      url: "https://github.com/d1s-utils/long-polling"
 
     - name: "yaspeller-kt"
       description: |
@@ -97,7 +177,7 @@ resume:
         for Spring modules and
         other libraries.
       status: "development"
-      url: "https://github.com/d1snin/teabags"
+      url: "https://github.com/d1s-utils/teabags"
 
     - name: "resume"
       description: "This resume."
@@ -126,7 +206,7 @@ resume:
         convenient exception handling,
         mostly for my projects.
       status: "maintenance"
-      url: "https://github.com/d1snin/spring-boot-starter-advice"
+      url: "https://github.com/d1s-utils/spring-boot-starter-advice"
 
     - name: "spring-boot-starter-simple-security"
       description: |
@@ -134,7 +214,7 @@ resume:
         providing simple
         secret-based authentication.
       status: "maintenance"
-      url: "https://github.com/d1snin/spring-boot-starter-simple-security"
+      url: "https://github.com/d1s-utils/spring-boot-starter-simple-security"
 
     - name: "initializr-over-discord"
       description: |

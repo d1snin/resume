@@ -43,4 +43,11 @@ interface ResumeController {
         @RequestParam("echo", required = false) echo: String?,
         response: HttpServletResponse
     ): ResponseEntity<String>?
+
+    @GetMapping(RESUME_PAGE_MAPPING)
+    fun getResume(
+        @RequestHeader("Accept", required = false) accept: String?,
+        @RequestParam("echo", required = false) echo: String?,
+        response: HttpServletResponse
+    ): ResponseEntity<String>?
 }

@@ -1,5 +1,6 @@
 package dev.d1s.resume.renderer.impl
 
+import dev.d1s.resume.constant.RESUME_FILE_LOCATION
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.page.PageRendering
 import dev.d1s.resume.properties.ResumeConfigurationProperties
@@ -61,10 +62,10 @@ class HtmlResumeRenderer : ResumeRenderer {
                 meta("image".twitter(), pfpSource)
                 meta("image".og(), pfpSource)
 
-                styleLink("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css")
+                styleLink("https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css")
 
                 script {
-                    src = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                    src = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
                 }
             }
 
@@ -96,9 +97,9 @@ class HtmlResumeRenderer : ResumeRenderer {
 
                                                 span(
                                                     classes = if (it == page) {
-                                                        "active"
+                                                        "text-info"
                                                     } else {
-                                                        ""
+                                                        "text-primary"
                                                     }
                                                 ) {
                                                     +it.prettyName
@@ -141,6 +142,7 @@ class HtmlResumeRenderer : ResumeRenderer {
                         Page.CONTACTS -> renderContacts()
                         Page.KNOWLEDGE -> renderKnowledge()
                         Page.PROJECTS -> renderProjects()
+                        Page.RESUME -> renderResume()
                     }
                 }
 
@@ -148,7 +150,6 @@ class HtmlResumeRenderer : ResumeRenderer {
                     unsafe {
                         +"* { font-family: monospace, monospace; }"
                         +"body { background-color: #212121; }"
-                        +".active { color: #e9e9e9; }"
                         +".pfp { width: 13em; height: auto; }"
                         +".stub { height: 2em; }"
                         +".card { width: 35rem; }"
@@ -178,10 +179,16 @@ class HtmlResumeRenderer : ResumeRenderer {
                 +"knowledge"
             }
 
-            +" and "
+            +",  "
 
             a(Page.PROJECTS.httpsLink) {
                 +"projects"
+            }
+
+            +" and "
+
+            a(Page.RESUME.httpsLink) {
+                +"the resume"
             }
 
             +"."
@@ -237,6 +244,22 @@ class HtmlResumeRenderer : ResumeRenderer {
         newSection("Frameworks") {
             renderKnowledgeCards(config.frameworks, "frameworks")
         }
+
+        newSection("Databases") {
+            renderKnowledgeCards(config.databases, "databases")
+        }
+
+        newSection("Editors") {
+            renderKnowledgeCards(config.editors, "editors")
+        }
+
+        newSection("Operating systems") {
+            renderKnowledgeCards(config.operatingSystems, "operating systems")
+        }
+
+        newSection("CI") {
+            renderKnowledgeCards(config.ci, "CI tools")
+        }
     }
 
     private fun DIV.renderProjects() {
@@ -263,6 +286,18 @@ class HtmlResumeRenderer : ResumeRenderer {
 
                     a(url) {
                         +url
+                    }
+                }
+            }
+        }
+    }
+
+    private fun DIV.renderResume() {
+        newSection("Resume") {
+            div("m-3") {
+                a(href = RESUME_FILE_LOCATION) {
+                    button(classes = "btn btn-primary btn-lg") {
+                        +"Download resume (russian)"
                     }
                 }
             }

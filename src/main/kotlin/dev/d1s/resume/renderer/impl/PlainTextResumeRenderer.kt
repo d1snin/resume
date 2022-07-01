@@ -2,6 +2,7 @@ package dev.d1s.resume.renderer.impl
 
 import com.jakewharton.picnic.*
 import dev.d1s.resume.constant.PLAIN_TEXT_RESUME_CACHE
+import dev.d1s.resume.constant.RESUME_FILE_LOCATION
 import dev.d1s.resume.page.Page
 import dev.d1s.resume.page.PageRendering
 import dev.d1s.resume.properties.ResumeConfigurationProperties
@@ -29,10 +30,11 @@ class PlainTextResumeRenderer : ResumeRenderer {
         return this.renderTableWithDefaultHeader(pageRendering) {
             when (pageRendering.page) {
                 Page.MAIN -> {} // nothing to render
-                Page.ABOUT_ME -> this.renderAboutMe()
-                Page.CONTACTS -> this.renderContacts()
-                Page.KNOWLEDGE -> this.renderKnowledge()
-                Page.PROJECTS -> this.renderProjects()
+                Page.ABOUT_ME -> renderAboutMe()
+                Page.CONTACTS -> renderContacts()
+                Page.KNOWLEDGE -> renderKnowledge()
+                Page.PROJECTS -> renderProjects()
+                Page.RESUME -> renderResume()
             }
         }
     }
@@ -98,11 +100,25 @@ class PlainTextResumeRenderer : ResumeRenderer {
     private fun TableDsl.renderKnowledge() {
         val languages = config.languages
         val frameworks = config.frameworks
+        val databases = config.databases
+        val editors = config.editors
+        val operatingSystems = config.operatingSystems
+        val ci = config.ci
 
         this.buildKnowledge("Languages", languages)
         this.buildKnowledge("Frameworks", frameworks)
+        this.buildKnowledge("Databases", databases)
+        this.buildKnowledge("Editors", editors)
+        this.buildKnowledge("Operating systems", operatingSystems)
+        this.buildKnowledge("CI tools", ci)
 
-        if (languages.isEmpty() && frameworks.isEmpty()) {
+        if ((languages
+                    + frameworks
+                    + databases
+                    + editors
+                    + operatingSystems
+                    + ci).isEmpty()
+        ) {
             row(
                 asteriskList("No knowledge provided.")
             )
@@ -128,6 +144,12 @@ class PlainTextResumeRenderer : ResumeRenderer {
                 asteriskList("No projects provided.")
             )
         }
+    }
+
+    private fun TableDsl.renderResume() {
+        row(
+            asteriskList("You can download my resume here (in russian)" to RESUME_FILE_LOCATION)
+        )
     }
 
     private inline fun renderTableWithDefaultHeader(

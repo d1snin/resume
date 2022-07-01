@@ -22,5 +22,9 @@ enum class Page(val path: String, val prettyName: String) {
     PROJECTS(
         PROJECTS_PAGE_MAPPING,
         "Projects"
+    ),
+    RESUME(
+        RESUME_PAGE_MAPPING,
+        "Resume"
     )
 }
